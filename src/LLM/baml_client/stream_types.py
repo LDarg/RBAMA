@@ -23,12 +23,19 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
 # #########################################################################
-# Generated classes (6)
+# Generated classes (9)
 # #########################################################################
 
 class DMM_Output(BaseModel):
     position: typing.List[int]
     reasoning: typing.Optional[str] = None
+
+class NavigationAgent(BaseModel):
+    tool_name: typing.Optional[str] = None
+    goal_position_coordinates: typing.List[int]
+
+class Obligation(BaseModel):
+    obligation: typing.Optional[str] = None
 
 class Position(BaseModel):
     row: typing.Optional[int] = None
@@ -37,11 +44,13 @@ class Position(BaseModel):
 class Positions(BaseModel):
     positions: typing.List["Position"]
 
-class Resume(BaseModel):
-    name: typing.Optional[str] = None
-    email: typing.Optional[str] = None
-    experience: typing.List[str]
-    skills: typing.List[str]
+class PullOutOfWater(BaseModel):
+    tool_name: typing.Optional[str] = None
+    description_of_the_action: typing.Optional[str] = None
+
+class SpotNextToPerson(BaseModel):
+    tool_name: typing.Optional[str] = None
+    goal_position_coordinates: typing.List[int]
 
 class State(BaseModel):
     agent_position: typing.Optional["Position"] = None

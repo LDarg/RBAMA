@@ -41,12 +41,19 @@ def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
 # #########################################################################
 
 # #########################################################################
-# Generated classes (6)
+# Generated classes (9)
 # #########################################################################
 
 class DMM_Output(BaseModel):
     position: typing.List[int]
     reasoning: str
+
+class NavigationAgent(BaseModel):
+    tool_name: typing_extensions.Literal['navigation_agent']
+    goal_position_coordinates: typing.List[int]
+
+class Obligation(BaseModel):
+    obligation: str
 
 class Position(BaseModel):
     row: int
@@ -55,11 +62,13 @@ class Position(BaseModel):
 class Positions(BaseModel):
     positions: typing.List["Position"]
 
-class Resume(BaseModel):
-    name: str
-    email: str
-    experience: typing.List[str]
-    skills: typing.List[str]
+class PullOutOfWater(BaseModel):
+    tool_name: typing_extensions.Literal['special_action']
+    description_of_the_action: str
+
+class SpotNextToPerson(BaseModel):
+    tool_name: typing_extensions.Literal['get_spot_next_to_person']
+    goal_position_coordinates: typing.List[int]
 
 class State(BaseModel):
     agent_position: "Position"

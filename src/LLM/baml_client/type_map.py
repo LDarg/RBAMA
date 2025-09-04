@@ -19,14 +19,23 @@ type_map = {
     "types.DMM_Output": types.DMM_Output,
     "stream_types.DMM_Output": stream_types.DMM_Output,
 
+    "types.NavigationAgent": types.NavigationAgent,
+    "stream_types.NavigationAgent": stream_types.NavigationAgent,
+
+    "types.Obligation": types.Obligation,
+    "stream_types.Obligation": stream_types.Obligation,
+
     "types.Position": types.Position,
     "stream_types.Position": stream_types.Position,
 
     "types.Positions": types.Positions,
     "stream_types.Positions": stream_types.Positions,
 
-    "types.Resume": types.Resume,
-    "stream_types.Resume": stream_types.Resume,
+    "types.PullOutOfWater": types.PullOutOfWater,
+    "stream_types.PullOutOfWater": stream_types.PullOutOfWater,
+
+    "types.SpotNextToPerson": types.SpotNextToPerson,
+    "stream_types.SpotNextToPerson": stream_types.SpotNextToPerson,
 
     "types.State": types.State,
     "stream_types.State": stream_types.State,

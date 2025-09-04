@@ -85,18 +85,25 @@ class BamlSyncClient:
     def parse_stream(self):
       return self.__llm_stream_parser
     
-    def ChooseActionV1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> types.DMM_Output:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ChooseActionV1", args={
+        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ChooseActionForm1", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
+        })
+        return typing.cast(types.DMM_Output, result.cast_to(types, types, stream_types, False, __runtime__))
+    def ChooseActionForm2(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.DMM_Output:
+        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ChooseActionForm2", args={
             "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
         })
         return typing.cast(types.DMM_Output, result.cast_to(types, types, stream_types, False, __runtime__))
-    def ChooseActionV2(self, state: types.State,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm3(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> types.DMM_Output:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ChooseActionV2", args={
-            "state": state,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
+        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ChooseActionForm3", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
         })
         return typing.cast(types.DMM_Output, result.cast_to(types, types, stream_types, False, __runtime__))
     def ExtractAction(self, coordinates: typing.List[int],goal_position: typing.List[int],water_tiles: typing.List[int],
@@ -120,13 +127,13 @@ class BamlSyncClient:
             "coordinates": coordinates,
         })
         return typing.cast(types.Test_Coordinates, result.cast_to(types, types, stream_types, False, __runtime__))
-    def ExtractResume(self, resume: str,
+    def MacroActionExecution(self, agent_position: types.Position,target_position: types.Position,obligations: str,
         baml_options: BamlCallOptions = {},
-    ) -> types.Resume:
-        result = self.__options.merge_options(baml_options).call_function_sync(function_name="ExtractResume", args={
-            "resume": resume,
+    ) -> typing.Union["types.NavigationAgent", "types.PullOutOfWater"]:
+        result = self.__options.merge_options(baml_options).call_function_sync(function_name="MacroActionExecution", args={
+            "agent_position": agent_position,"target_position": target_position,"obligations": obligations,
         })
-        return typing.cast(types.Resume, result.cast_to(types, types, stream_types, False, __runtime__))
+        return typing.cast(typing.Union["types.NavigationAgent", "types.PullOutOfWater"], result.cast_to(types, types, stream_types, False, __runtime__))
     def TestWaterTiles(self, agent_position: types.Position,water_tiles: types.Positions,goal_position: types.Position,
         baml_options: BamlCallOptions = {},
     ) -> types.Position:
@@ -143,10 +150,22 @@ class BamlStreamClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ChooseActionV1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ChooseActionV1", args={
+        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ChooseActionForm1", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
+        })
+        return baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output](
+          result,
+          lambda x: typing.cast(stream_types.DMM_Output, x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(types.DMM_Output, x.cast_to(types, types, stream_types, False, __runtime__)),
+          ctx,
+        )
+    def ChooseActionForm2(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output]:
+        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ChooseActionForm2", args={
             "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
         })
         return baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output](
@@ -155,11 +174,11 @@ class BamlStreamClient:
           lambda x: typing.cast(types.DMM_Output, x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
-    def ChooseActionV2(self, state: types.State,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm3(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ChooseActionV2", args={
-            "state": state,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
+        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ChooseActionForm3", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
         })
         return baml_py.BamlSyncStream[stream_types.DMM_Output, types.DMM_Output](
           result,
@@ -203,16 +222,16 @@ class BamlStreamClient:
           lambda x: typing.cast(types.Test_Coordinates, x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
-    def ExtractResume(self, resume: str,
+    def MacroActionExecution(self, agent_position: types.Position,target_position: types.Position,obligations: str,
         baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlSyncStream[stream_types.Resume, types.Resume]:
-        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="ExtractResume", args={
-            "resume": resume,
+    ) -> baml_py.BamlSyncStream[typing.Union["stream_types.NavigationAgent", "stream_types.PullOutOfWater"], typing.Union["types.NavigationAgent", "types.PullOutOfWater"]]:
+        ctx, result = self.__options.merge_options(baml_options).create_sync_stream(function_name="MacroActionExecution", args={
+            "agent_position": agent_position,"target_position": target_position,"obligations": obligations,
         })
-        return baml_py.BamlSyncStream[stream_types.Resume, types.Resume](
+        return baml_py.BamlSyncStream[typing.Union["stream_types.NavigationAgent", "stream_types.PullOutOfWater"], typing.Union["types.NavigationAgent", "types.PullOutOfWater"]](
           result,
-          lambda x: typing.cast(stream_types.Resume, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.Resume, x.cast_to(types, types, stream_types, False, __runtime__)),
+          lambda x: typing.cast(typing.Union["stream_types.NavigationAgent", "stream_types.PullOutOfWater"], x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(typing.Union["types.NavigationAgent", "types.PullOutOfWater"], x.cast_to(types, types, stream_types, False, __runtime__)),
           ctx,
         )
     def TestWaterTiles(self, agent_position: types.Position,water_tiles: types.Positions,goal_position: types.Position,
@@ -235,18 +254,25 @@ class BamlHttpRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ChooseActionV1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionV1", args={
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm1", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
+        }, mode="request")
+        return result
+    def ChooseActionForm2(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm2", args={
             "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
         }, mode="request")
         return result
-    def ChooseActionV2(self, state: types.State,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm3(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionV2", args={
-            "state": state,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm3", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
         }, mode="request")
         return result
     def ExtractAction(self, coordinates: typing.List[int],goal_position: typing.List[int],water_tiles: typing.List[int],
@@ -270,11 +296,11 @@ class BamlHttpRequestClient:
             "coordinates": coordinates,
         }, mode="request")
         return result
-    def ExtractResume(self, resume: str,
+    def MacroActionExecution(self, agent_position: types.Position,target_position: types.Position,obligations: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractResume", args={
-            "resume": resume,
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="MacroActionExecution", args={
+            "agent_position": agent_position,"target_position": target_position,"obligations": obligations,
         }, mode="request")
         return result
     def TestWaterTiles(self, agent_position: types.Position,water_tiles: types.Positions,goal_position: types.Position,
@@ -292,18 +318,25 @@ class BamlHttpStreamRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ChooseActionV1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm1(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionV1", args={
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm1", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
+        }, mode="stream")
+        return result
+    def ChooseActionForm2(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm2", args={
             "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
         }, mode="stream")
         return result
-    def ChooseActionV2(self, state: types.State,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,hint: str,
+    def ChooseActionForm3(self, agent_position: types.Position,goal_position: types.Position,water_tiles: types.Positions,grid_size: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionV2", args={
-            "state": state,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,"hint": hint,
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ChooseActionForm3", args={
+            "agent_position": agent_position,"goal_position": goal_position,"water_tiles": water_tiles,"grid_size": grid_size,
         }, mode="stream")
         return result
     def ExtractAction(self, coordinates: typing.List[int],goal_position: typing.List[int],water_tiles: typing.List[int],
@@ -327,11 +360,11 @@ class BamlHttpStreamRequestClient:
             "coordinates": coordinates,
         }, mode="stream")
         return result
-    def ExtractResume(self, resume: str,
+    def MacroActionExecution(self, agent_position: types.Position,target_position: types.Position,obligations: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="ExtractResume", args={
-            "resume": resume,
+        result = self.__options.merge_options(baml_options).create_http_request_sync(function_name="MacroActionExecution", args={
+            "agent_position": agent_position,"target_position": target_position,"obligations": obligations,
         }, mode="stream")
         return result
     def TestWaterTiles(self, agent_position: types.Position,water_tiles: types.Positions,goal_position: types.Position,

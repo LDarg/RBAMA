@@ -7,6 +7,7 @@ import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
 from src.environments.bridge_person import Person_Moving, Person_Static, Status, Drowning_TimeFixed
+import random
 
 class Bridge_Map():
     def __init__(self, num_bridges,  width, height, dangerous_spots):
@@ -152,7 +153,7 @@ class Bridge_Map():
              return True
          
     """
-    checks if coordinates lie in water
+    checks if coordinates lie on briddge
     """    
     def position_on_bridge(self, coordinates):
         for _, bridge_tiles in self.bridges.items():
@@ -279,6 +280,8 @@ class Bridge(gym.Env):
         self._agent_location = np.array([0,0])
         self.render_mode=render_mode
         self.target_location = np.array(target_location)
+        self.slipping_spots = []
+
 
         assert render_mode is None or render_mode in self.metadata["render_modes"]
         assert num_bridges in [1, 2, 3], "Invalid number of bridges. Number of bridges must be 1,2 or 3."
@@ -316,6 +319,14 @@ class Bridge(gym.Env):
             shape=(observation_size,),
             dtype=np.float32
         )
+
+        """cartesian coordinates for water_tiles"""
+        self.water_tiles = [
+            [x, y]  # cartesian coordinate of water tile
+            for y in range(grid_height)
+            for x in range(grid_width)
+            if self.bridge_map.get_grid_type([x, y]) == self.bridge_map.grid_types["water"]
+        ]
 
         """
         the action space (primtive actions the agent can take):
@@ -496,6 +507,13 @@ class Bridge(gym.Env):
             self._agent_location[0] = random_gen.integers(0, self.bridge_map.width)
             self._agent_location[1] = random_gen.integers(0, self.bridge_map.height)
             agent_grid_type = self.bridge_map.get_grid_type(self._agent_location)
+
+    """
+    functions for randomizing certain parts of the layout of the map
+    """
+    def set_random_target_location(self, random_gen):
+        self.target_location[0] = random_gen.integers(0, self.bridge_map.width)
+        self.target_location[1] = random_gen.integers(0, self.bridge_map.height)
 
     """
     functions for resetting the environment

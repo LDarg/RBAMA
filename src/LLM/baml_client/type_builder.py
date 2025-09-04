@@ -20,7 +20,7 @@ from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIM
 class TypeBuilder(type_builder.TypeBuilder):
     def __init__(self):
         super().__init__(classes=set(
-          ["DMM_Output","Position","Positions","Resume","State","Test_Coordinates",]
+          ["DMM_Output","NavigationAgent","Obligation","Position","Positions","PullOutOfWater","SpotNextToPerson","State","Test_Coordinates",]
         ), enums=set(
           []
         ), runtime=DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
@@ -31,12 +31,20 @@ class TypeBuilder(type_builder.TypeBuilder):
 
 
     # #########################################################################
-    # Generated classes 6
+    # Generated classes 9
     # #########################################################################
 
     @property
     def DMM_Output(self) -> "DMM_OutputViewer":
         return DMM_OutputViewer(self)
+
+    @property
+    def NavigationAgent(self) -> "NavigationAgentViewer":
+        return NavigationAgentViewer(self)
+
+    @property
+    def Obligation(self) -> "ObligationViewer":
+        return ObligationViewer(self)
 
     @property
     def Position(self) -> "PositionViewer":
@@ -47,8 +55,12 @@ class TypeBuilder(type_builder.TypeBuilder):
         return PositionsViewer(self)
 
     @property
-    def Resume(self) -> "ResumeViewer":
-        return ResumeViewer(self)
+    def PullOutOfWater(self) -> "PullOutOfWaterViewer":
+        return PullOutOfWaterViewer(self)
+
+    @property
+    def SpotNextToPerson(self) -> "SpotNextToPersonViewer":
+        return SpotNextToPersonViewer(self)
 
     @property
     def State(self) -> "StateViewer":
@@ -66,7 +78,7 @@ class TypeBuilder(type_builder.TypeBuilder):
 
 
 # #########################################################################
-# Generated classes 6
+# Generated classes 9
 # #########################################################################
 
 class DMM_OutputAst:
@@ -108,6 +120,88 @@ class DMM_OutputProperties:
     @property
     def reasoning(self) -> type_builder.ClassPropertyViewer:
         return type_builder.ClassPropertyViewer(self.__bldr.property("reasoning"))
+    
+    
+
+
+class NavigationAgentAst:
+    def __init__(self, tb: type_builder.TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("NavigationAgent")
+        self._properties: typing.Set[str] = set([  "tool_name",  "goal_position_coordinates",  ])
+        self._props = NavigationAgentProperties(self._bldr, self._properties)
+
+    def type(self) -> baml_py.FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "NavigationAgentProperties":
+        return self._props
+
+
+class NavigationAgentViewer(NavigationAgentAst):
+    def __init__(self, tb: type_builder.TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, type_builder.ClassPropertyViewer]]:
+        return [(name, type_builder.ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+    
+
+
+class NavigationAgentProperties:
+    def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
+
+    
+    
+    @property
+    def tool_name(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("tool_name"))
+    
+    @property
+    def goal_position_coordinates(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("goal_position_coordinates"))
+    
+    
+
+
+class ObligationAst:
+    def __init__(self, tb: type_builder.TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("Obligation")
+        self._properties: typing.Set[str] = set([  "obligation",  ])
+        self._props = ObligationProperties(self._bldr, self._properties)
+
+    def type(self) -> baml_py.FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "ObligationProperties":
+        return self._props
+
+
+class ObligationViewer(ObligationAst):
+    def __init__(self, tb: type_builder.TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, type_builder.ClassPropertyViewer]]:
+        return [(name, type_builder.ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+    
+
+
+class ObligationProperties:
+    def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
+
+    
+    
+    @property
+    def obligation(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("obligation"))
     
     
 
@@ -194,22 +288,22 @@ class PositionsProperties:
     
 
 
-class ResumeAst:
+class PullOutOfWaterAst:
     def __init__(self, tb: type_builder.TypeBuilder):
         _tb = tb._tb # type: ignore (we know how to use this private attribute)
-        self._bldr = _tb.class_("Resume")
-        self._properties: typing.Set[str] = set([  "name",  "email",  "experience",  "skills",  ])
-        self._props = ResumeProperties(self._bldr, self._properties)
+        self._bldr = _tb.class_("PullOutOfWater")
+        self._properties: typing.Set[str] = set([  "tool_name",  "description_of_the_action",  ])
+        self._props = PullOutOfWaterProperties(self._bldr, self._properties)
 
     def type(self) -> baml_py.FieldType:
         return self._bldr.field()
 
     @property
-    def props(self) -> "ResumeProperties":
+    def props(self) -> "PullOutOfWaterProperties":
         return self._props
 
 
-class ResumeViewer(ResumeAst):
+class PullOutOfWaterViewer(PullOutOfWaterAst):
     def __init__(self, tb: type_builder.TypeBuilder):
         super().__init__(tb)
 
@@ -219,7 +313,7 @@ class ResumeViewer(ResumeAst):
     
 
 
-class ResumeProperties:
+class PullOutOfWaterProperties:
     def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
         self.__bldr = bldr
         self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
@@ -227,20 +321,55 @@ class ResumeProperties:
     
     
     @property
-    def name(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("name"))
+    def tool_name(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("tool_name"))
     
     @property
-    def email(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("email"))
+    def description_of_the_action(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("description_of_the_action"))
+    
+    
+
+
+class SpotNextToPersonAst:
+    def __init__(self, tb: type_builder.TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.class_("SpotNextToPerson")
+        self._properties: typing.Set[str] = set([  "tool_name",  "goal_position_coordinates",  ])
+        self._props = SpotNextToPersonProperties(self._bldr, self._properties)
+
+    def type(self) -> baml_py.FieldType:
+        return self._bldr.field()
+
+    @property
+    def props(self) -> "SpotNextToPersonProperties":
+        return self._props
+
+
+class SpotNextToPersonViewer(SpotNextToPersonAst):
+    def __init__(self, tb: type_builder.TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_properties(self) -> typing.List[typing.Tuple[str, type_builder.ClassPropertyViewer]]:
+        return [(name, type_builder.ClassPropertyViewer(self._bldr.property(name))) for name in self._properties]
+    
+
+
+class SpotNextToPersonProperties:
+    def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
+        self.__bldr = bldr
+        self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
+
+    
     
     @property
-    def experience(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("experience"))
+    def tool_name(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("tool_name"))
     
     @property
-    def skills(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("skills"))
+    def goal_position_coordinates(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("goal_position_coordinates"))
     
     
 

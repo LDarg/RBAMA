@@ -22,16 +22,22 @@ class LlmResponseParser:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ChooseActionV1(
+    def ChooseActionForm1(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> types.DMM_Output:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionV1", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm1", llm_response=llm_response, mode="request")
         return typing.cast(types.DMM_Output, result)
 
-    def ChooseActionV2(
+    def ChooseActionForm2(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> types.DMM_Output:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionV2", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm2", llm_response=llm_response, mode="request")
+        return typing.cast(types.DMM_Output, result)
+
+    def ChooseActionForm3(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> types.DMM_Output:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm3", llm_response=llm_response, mode="request")
         return typing.cast(types.DMM_Output, result)
 
     def ExtractAction(
@@ -52,11 +58,11 @@ class LlmResponseParser:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractCoordinates", llm_response=llm_response, mode="request")
         return typing.cast(types.Test_Coordinates, result)
 
-    def ExtractResume(
+    def MacroActionExecution(
         self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.Resume:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="request")
-        return typing.cast(types.Resume, result)
+    ) -> typing.Union["types.NavigationAgent", "types.PullOutOfWater"]:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="MacroActionExecution", llm_response=llm_response, mode="request")
+        return typing.cast(typing.Union["types.NavigationAgent", "types.PullOutOfWater"], result)
 
     def TestWaterTiles(
         self, llm_response: str, baml_options: BamlCallOptions = {},
@@ -72,16 +78,22 @@ class LlmStreamParser:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def ChooseActionV1(
+    def ChooseActionForm1(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> stream_types.DMM_Output:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionV1", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm1", llm_response=llm_response, mode="stream")
         return typing.cast(stream_types.DMM_Output, result)
 
-    def ChooseActionV2(
+    def ChooseActionForm2(
         self, llm_response: str, baml_options: BamlCallOptions = {},
     ) -> stream_types.DMM_Output:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionV2", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm2", llm_response=llm_response, mode="stream")
+        return typing.cast(stream_types.DMM_Output, result)
+
+    def ChooseActionForm3(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> stream_types.DMM_Output:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="ChooseActionForm3", llm_response=llm_response, mode="stream")
         return typing.cast(stream_types.DMM_Output, result)
 
     def ExtractAction(
@@ -102,11 +114,11 @@ class LlmStreamParser:
         result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractCoordinates", llm_response=llm_response, mode="stream")
         return typing.cast(stream_types.Test_Coordinates, result)
 
-    def ExtractResume(
+    def MacroActionExecution(
         self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.Resume:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ExtractResume", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.Resume, result)
+    ) -> typing.Union["stream_types.NavigationAgent", "stream_types.PullOutOfWater"]:
+        result = self.__options.merge_options(baml_options).parse_response(function_name="MacroActionExecution", llm_response=llm_response, mode="stream")
+        return typing.cast(typing.Union["stream_types.NavigationAgent", "stream_types.PullOutOfWater"], result)
 
     def TestWaterTiles(
         self, llm_response: str, baml_options: BamlCallOptions = {},

@@ -29,6 +29,7 @@ class Person():
         self.slipping_prob = slipping_prob
         self.pushed_off_bridge_prob = pushed_off_bridge_prob
         self.spawns_at_map_reset = spawns_at_map_reset
+        self.slipping_spot = None
 
     @property
     def status (self):
@@ -66,6 +67,7 @@ class Person():
     def to_water(self, bridge_map):
         for tile in bridge_map.get_adjacent_tiles(self.position):
             if bridge_map.get_grid_type(tile) == bridge_map.grid_types["water"]:
+                self.slipping_spot = self.position
                 self.position = tile
                 break
         self.status = Status.IN_WATER_AT_RISK 
