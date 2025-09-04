@@ -54,7 +54,7 @@ def visualize(state_reset=None, random_init= "no randomness"):
 
             while(not terminated and not truncated): 
                     test = state
-                    action, reasoning = b.ChooseActionForm2(agent_position=state["agent_position"], water_tiles=water_tiles, goal_position=goal_position, grid_size=7, hint=hint)
+                    action, reasoning = b.ChooseActionForm2(agent_position=state["agent_position"], water_tiles=water_tiles, goal_position=goal_position, grid_size=7)
                     action = action_index(np.array(action[1]), np.array([state["agent_position"]["column"], state["agent_position"]["row"]]))
                     #action = Action[str(action[1]).upper()].value
                     #action, reasoning = b.TestWaterTiles(agent_position=state["agent_position"], water_tiles=water_tiles, goal_position=goal_position)
