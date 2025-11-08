@@ -96,20 +96,3 @@ This repository implements an operational framework grounded in an agentic archi
    <img src="pics/reasoning_conflicted.png" alt="My Screenshot" width="200"/>
 
    The agent recognizes a moral conflict and solves it by applying a priority order among its normative reasons.
-
-<!-- If making the code public add citation(?)
-
-## 📖 Citation
-
-If you use this work in your research, please cite:
-
-```bibtex
-@article{baum2024actingrightreasonscreating,
-  title={Acting for the Right Reasons: Creating Reason-Sensitive Artificial Moral Agents},
-  author={Baum, Kevin and Dargasz, Lisa and Jahn, Felix and Gros, Timo P and Wolf, Verena},
-  journal={arXiv preprint arXiv:2409.15014},
-  year={2024}
-}
-```
-
--->
