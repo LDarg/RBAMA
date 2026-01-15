@@ -145,7 +145,7 @@ def visualize_reasoning(agent, env, reset_state=None, random_init="positions"):
             terminated = False     
             truncated = False                
 
-            # morally shielded policy
+            # execute moral policy
             while(not terminated and not truncated): 
                 moral_obligations = agent.reasoning_unit.moral_obligations(env.get_lables(), state)
                 render_graph_reasoning(agent,moral_obligations, ax_order, ax_theory, env, state)
