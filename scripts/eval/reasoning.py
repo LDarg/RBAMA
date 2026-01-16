@@ -87,6 +87,7 @@ def render_graph_reasoning(agent, moral_obligations, ax_order, ax_theory, env, s
 
     # creates text field to display the order among the rules
     order_text = ""
+    obligations = set()
     for rule in agent.reasoning_unit.G.edges(data=True):
         _, _, rule_data = rule
         lower_order = rule_data.get('lower_order', None)
@@ -98,7 +99,11 @@ def render_graph_reasoning(agent, moral_obligations, ax_order, ax_theory, env, s
 
 
     lables = env.get_lables()
-    if {"R","C"} in agent.reasoning_unit.conflicted_actions(lables, state):
+    obligations = set()
+    for rule in agent.reasoning_unit.G.edges(data=True):
+        if rule[0] in lables:
+            obligations.add(rule[1])
+    if agent.reasoning_unit.conflicted_actions(obligations, state):
         ax_order.text(
             0.5, 0.3,  
             f"Conflicted!\n{order_text}", 
@@ -164,15 +169,15 @@ def visualize_reasoning(agent, env, reset_state=None, random_init="positions"):
                 state,_,terminated,truncated,_ = env.step(action)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Visualize the reasoning of the RBAMA during navigating the environmnet.")
-    
-    parser.add_argument('agent_name', type=str, help="Name of the agent")
-    parser.add_argument('--state_reset', type=ast.literal_eval, help='"List of values values specifying the positions of the agent and each person on the flattened map, following the pattern: [agent_position, position_person_id_1, position_person_id_2, position_person_id_3, position_person_id_4]"')
+   parser = argparse.ArgumentParser(description="Visualize the reasoning of the RBAMA during navigating the environmnet.")
+   parser.add_argument('agent_name', type=str, help="Name of the agent")
+   parser.add_argument('--state_reset', type=ast.literal_eval, help='"List of values values specifying the positions of the agent and each person on the flattened map, following the pattern: [agent_position, position_person_id_1, position_person_id_2, position_person_id_3, position_person_id_4]"')
 
-    args = parser.parse_args()
-    agent_name = args.agent_name
-    agent, agent_training_env = RBAMA.setup_reasoning_agent(agent_name)
-    state_reset = args.state_reset
-    visualize_reasoning(agent, agent_training_env, reset_state=state_reset)
+   args = parser.parse_args()
+   agent_name = args.agent_name
+   agent, agent_training_env = RBAMA.setup_reasoning_agent(agent_name)
+   state_reset = args.state_reset
+
+   visualize_reasoning(agent, agent_training_env, reset_state=state_reset)
 
     
