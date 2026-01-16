@@ -1,6 +1,6 @@
 .PHONY: clean requirements help
 
-.DEFAULT_GOAL := requirements
+.DEFAULT_GOAL:= requirements
 
 ## Install Python Dependencies
 requirements: 
